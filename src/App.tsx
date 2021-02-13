@@ -1,16 +1,19 @@
 import React from 'react';
 import { CreateTodo } from './Domain/UseCases/CreateTodo';
 import { iCreateTodo } from './Interfaces/iCreateTodo';
-import { iTodoPresenter } from './Interfaces/iTodoPresenter';
-import { TodoPresenter } from './Presenter/TodoPresenter';
+import { iTodoAddForm } from './Interfaces/iTodoAddForm';
+import { iTodoViewPresenter } from './Interfaces/iTodoViewPresenter';
+import { MockupPresenter } from './Presenter/MockUpViewPresenter';
+import { TodoAddPresenter } from './Presenter/TodoAddPresenter';
 import TodosPage from './UI/TodosPage';
 
 function App() {
   let createCase: iCreateTodo = new CreateTodo();
-  let presenter: iTodoPresenter = new TodoPresenter(createCase);
+  let addPresenter: iTodoAddForm = new TodoAddPresenter(createCase);
+  let viewPresenter: iTodoViewPresenter = new MockupPresenter();
 
   return (
-    <TodosPage presenter={presenter}></TodosPage>
+    <TodosPage addPresenter={addPresenter} viewPresenter={viewPresenter}></TodosPage>
   );
 }
 

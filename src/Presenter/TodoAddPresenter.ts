@@ -1,19 +1,19 @@
 import { title } from "process";
 import { TodoModel } from "../Domain/Entities/Todo";
 import { iCreateTodo } from "../Interfaces/iCreateTodo";
-import { iTodoPresenter } from "../Interfaces/iTodoPresenter";
+import { iTodoAddForm } from "../Interfaces/iTodoAddForm";
 
-export class TodoPresenter implements iTodoPresenter {
+export class TodoAddPresenter implements iTodoAddForm {
     private readonly createTodo: iCreateTodo;
 
     constructor(createTodo: iCreateTodo) {
         this.createTodo = createTodo;
     }
 
-    AddTodoCallback(title: String) {
+    AddTodoCallback(title: String, description: String) {
         console.log("Creating Todo");
 
-        let newTodo: TodoModel = this.createTodo.fromTitleAndDescription(title, '');
-        console.log(newTodo);
+        let newTodo: TodoModel = this.createTodo.fromTitleAndDescription(title, description);
+        return newTodo;
     }
 }

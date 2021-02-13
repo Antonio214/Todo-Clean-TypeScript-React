@@ -1,0 +1,32 @@
+.forms {
+    position: relative;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+
+.forms-title {
+    position: relative;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    height: 10vw;
+    font-size: 3vw;
+}
+.list {
+    width: 45vw;
+}
+
+.list-container {
+    justify-content: center;
+    display: flex;
+    align-items: center;
+}
+
