@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 
 import { TodoModel } from '../Domain/Entities/Todo';
 import { iTodoAddForm } from '../Interfaces/iTodoAddForm'
+import { iTodoEditPresenter } from '../Interfaces/iTodoEditPresenter';
 import { iTodoViewPresenter } from '../Interfaces/iTodoViewPresenter';
 
 import TodoForms from './Components/TodoForm';
@@ -13,10 +14,11 @@ import "./List.css";
 interface props {
     addPresenter: iTodoAddForm,
     viewPresenter: iTodoViewPresenter,
+    editPresenter: iTodoEditPresenter,
 }
 
 
-const TodosPage: React.FC<props> = ({ addPresenter, viewPresenter }) => {
+const TodosPage: React.FC<props> = ({ addPresenter, viewPresenter, editPresenter }) => {
     Aos.init()
 
     const [title, setTitle] = useState('');
@@ -33,11 +35,11 @@ const TodosPage: React.FC<props> = ({ addPresenter, viewPresenter }) => {
                     To Do List
             </div>
                 <div className='forms'>
-                    <TodoForms handleChange={handleChange} value={title} handleSubmit={handleSubmit}></TodoForms>
+                    <TodoForms handleChange={handleTitleChange} value={title} handleSubmit={handleCreate}></TodoForms>
                 </div>
                 <div className='list-container'>
                     <div className='list'>
-                        <TodoListView todos={todoList}></TodoListView>
+                        <TodoListView todos={todoList} handleComplete={handleComplete}></TodoListView>
                     </div>
                 </div>
             </div>
@@ -49,7 +51,7 @@ const TodosPage: React.FC<props> = ({ addPresenter, viewPresenter }) => {
         setTodoList(newList);
     }
 
-    function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    function handleCreate(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
 
         let newTodo = addPresenter.AddTodoCallback(title, '');
@@ -58,8 +60,13 @@ const TodosPage: React.FC<props> = ({ addPresenter, viewPresenter }) => {
         setTitle('');
     }
 
+    function handleComplete(event: React.ChangeEvent<HTMLInputElement>) {
 
-    function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+        let newTodoList = editPresenter.toggleTodoCallback(todoList, Number(event.target.id));
+        setTodoList([...newTodoList]);
+    }
+
+    function handleTitleChange(event: React.ChangeEvent<HTMLInputElement>) {
         setTitle(event.target.value);
     }
 

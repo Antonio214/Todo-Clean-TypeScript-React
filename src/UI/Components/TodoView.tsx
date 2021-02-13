@@ -11,16 +11,18 @@ import { TodoModel } from '../../Domain/Entities/Todo';
 
 interface props {
     todos: TodoModel[],
+    handleComplete: (event: React.ChangeEvent<HTMLInputElement>) => void,
 }
 
-const TodoListView: React.FC<props> = ({ todos }) => {
+const TodoListView: React.FC<props> = ({ todos, handleComplete }) => {
     AOS.init()
     return (
         <List>
             {todos.map((todo, index) => (
                 <ListItem key={index.toString()} dense button data-aos="fade-right" data-aos-duration="1500">
-                    <Checkbox tabIndex={-1} disableRipple />
-                    <ListItemText primary={todo.title} />
+                    <Checkbox tabIndex={-1} disableRipple checked={todo.isComplete} id={index.toString()}
+                        onChange={handleComplete} />
+                    <ListItemText primary={todo.title} secondary={todo.description} />
                     <ListItemSecondaryAction>
                         <IconButton
                             aria-label="Delete"
