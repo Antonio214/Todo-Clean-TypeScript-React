@@ -12,10 +12,10 @@ import { TodoModel } from '../../Domain/Entities/Todo';
 interface props {
     todos: TodoModel[],
     handleComplete: (event: React.ChangeEvent<HTMLInputElement>) => void,
+    handleDelete: (index: number) => void,
 }
 
-const TodoListView: React.FC<props> = ({ todos, handleComplete }) => {
-    AOS.init()
+const TodoListView: React.FC<props> = ({ todos, handleComplete, handleDelete }) => {
     return (
         <List>
             {todos.map((todo, index) => (
@@ -26,7 +26,7 @@ const TodoListView: React.FC<props> = ({ todos, handleComplete }) => {
                     <ListItemSecondaryAction>
                         <IconButton
                             aria-label="Delete"
-                            onClick={() => { }}
+                            onClick={() => { handleDelete(index) }}
                         >
                             <DeleteIcon data-aos="fade-right" data-aos-duration="1500" />
                         </IconButton>

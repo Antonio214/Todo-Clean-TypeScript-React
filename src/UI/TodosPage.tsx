@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react'
 import { TodoModel } from '../Domain/Entities/Todo';
 import { iTodoAddForm } from '../Interfaces/iTodoAddForm'
 import { iTodoEditPresenter } from '../Interfaces/iTodoEditPresenter';
+import { iTodoRemoverPresenter } from '../Interfaces/iTodoRemoverPresenter';
 import { iTodoViewPresenter } from '../Interfaces/iTodoViewPresenter';
 
 import TodoForms from './Components/TodoForm';
@@ -15,17 +16,17 @@ interface props {
     addPresenter: iTodoAddForm,
     viewPresenter: iTodoViewPresenter,
     editPresenter: iTodoEditPresenter,
+    removePresenter: iTodoRemoverPresenter,
 }
 
 
-const TodosPage: React.FC<props> = ({ addPresenter, viewPresenter, editPresenter }) => {
-    Aos.init()
-
+const TodosPage: React.FC<props> = ({ addPresenter, viewPresenter, editPresenter, removePresenter }) => {
     const [title, setTitle] = useState('');
     const [todoList, setTodoList] = useState<TodoModel[]>([])
 
     useEffect(() => {
-        loadTodos()
+        loadTodos();
+        Aos.init();
     }, [])
 
     return (
@@ -39,7 +40,7 @@ const TodosPage: React.FC<props> = ({ addPresenter, viewPresenter, editPresenter
                 </div>
                 <div className='list-container'>
                     <div className='list'>
-                        <TodoListView todos={todoList} handleComplete={handleComplete}></TodoListView>
+                        <TodoListView todos={todoList} handleComplete={handleComplete} handleDelete={handleDelete}></TodoListView>
                     </div>
                 </div>
             </div>
@@ -63,6 +64,11 @@ const TodosPage: React.FC<props> = ({ addPresenter, viewPresenter, editPresenter
     function handleComplete(event: React.ChangeEvent<HTMLInputElement>) {
 
         let newTodoList = editPresenter.toggleTodoCallback(todoList, Number(event.target.id));
+        setTodoList([...newTodoList]);
+    }
+
+    function handleDelete(index: number) {
+        let newTodoList = removePresenter.removeCallBack(todoList, index);
         setTodoList([...newTodoList]);
     }
 
