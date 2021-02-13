@@ -1,5 +1,6 @@
 import Aos from 'aos';
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
+import 'aos/dist/aos.css';
 
 import { TodoModel } from '../Domain/Entities/Todo';
 import { iTodoAddForm } from '../Interfaces/iTodoAddForm'
